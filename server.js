@@ -3,12 +3,13 @@ import morgan from "morgan";
 import colors from "colors";
 import dotenv from 'dotenv';
 import connectDB from "./config/dbConfig.js";
+import placeRoute from "./routes/placeRoute.js"
 
 const app = express();
 
 // .env configure
 dotenv.config();
-const PORT = 5000;
+const PORT = process.env.PORT || 4000;
 
 // config DB 
 connectDB();
@@ -16,6 +17,9 @@ connectDB();
 // middlewares 
 app.use(express.json());
 app.use(morgan("dev"));
+
+// routes 
+app.use("/api/places", placeRoute);
 
 // rest api 
 app.get("/", (req, res) => {
