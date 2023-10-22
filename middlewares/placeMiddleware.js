@@ -1,4 +1,4 @@
-import { check, validationResult } from "express-validator";
+import { check } from "express-validator";
 
 export const validateCreatePlace = [
   check("title").notEmpty(),
@@ -6,10 +6,7 @@ export const validateCreatePlace = [
   check("address").notEmpty(),
 ];
 
-export const validatePlace = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-  next();
-};
+export const validateUpdatePlace = [
+  check("title").notEmpty(),
+  check("description").isLength({ min: 5 })
+];
