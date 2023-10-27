@@ -1,5 +1,6 @@
 import placeModel from "../models/placeModel.js";
 import { validationResult } from "express-validator";
+import { getCoordsForAddress } from "../utils/location.js";
 
 // get all places
 export const getAllPlace = async (req, res) => {
@@ -44,13 +45,22 @@ export const createPlaceController = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { title, description, address, coordinates, creator } = req.body;
+  const { title, description, address, creator } = req.body;
+
+  let coordinates;
+
+    try{
+        coordinates = await getCoordsForAddress(address);
+    }
+    catch(error){
+        return ({error, "message": "error while fetching coordinates"});
+    }
   const createdPlace = new placeModel({
     title,
     description,
     imageUrl: "test/url",
     address,
-    // location: coordinates,
+    location: coordinates,
     creator,
   });
 

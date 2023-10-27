@@ -22,10 +22,10 @@ const placeSchema = new Schema(
       required: true,
       trim: true,
     },
-    // location: {
-    //   lat: { type: Number, required: true },
-    //   lng: { type: Number, required: true },
-    // },
+    location: {
+      lat: { type: Number, required: true },
+      lng: { type: Number, required: true },
+    },
     creator: {
       type: String,
       required: true,
